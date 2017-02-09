@@ -1,0 +1,44 @@
+﻿@model HangmanMVC.Web.ViewModels.ResultsViewModel
+@{
+    ViewBag.Title = "Results";
+}
+
+<h2>Резултати за потребител @Model.UserName</h2>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="results">
+    <table>
+        <tr>
+            <th>Изиграни игри</th>
+            <th>Спечелени игри</th>
+            <th>Загубени игри</th>
+            <th>Познати пълни думи</th>
+            <th>Буквени опити</th>
+        </tr>
+        <tr>
+            <td>@Model.GamesPlayed</td>
+            <td>@Model.GamesWon</td>
+            <td>@Model.GamesLost</td>
+            <td>@Model.FullWordGuesses</td>
+            <td>@Model.Guesses</td>
+        </tr>
+     </table>
+</div>
+

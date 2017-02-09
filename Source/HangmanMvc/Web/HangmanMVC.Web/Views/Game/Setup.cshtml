@@ -1,0 +1,18 @@
+﻿@model Hangman.Web.ViewModels.Games.Index.IndexViewModel
+@{
+    ViewBag.Title = "Setup Game";
+}
+
+<h2>Setup Game</h2>
+
+@using (Html.BeginForm("StartGame", "Game", FormMethod.Get, new { @class = "row" }))
+{
+    <br />
+    <div class="col-md-6 col-md-offset-3">
+        @Html.EditorFor(m => m.CategoryId, "Dropdown", new { data = Model.Categories, @class = "form-control" })
+        <input type="submit" value="Start" class="btn btn-default" />
+    </div>
+}
+
+
+

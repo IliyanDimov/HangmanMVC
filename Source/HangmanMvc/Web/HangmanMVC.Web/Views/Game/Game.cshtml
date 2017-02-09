@@ -1,0 +1,112 @@
+﻿@model HangmanMVC.Web.ViewModels.GameViewModel
+@{
+    string disable = "";
+    if (Model.GameStatus == HangmanMVC.Web.ViewModels.GameStatus.Win ||
+        Model.GameStatus == HangmanMVC.Web.ViewModels.GameStatus.Lose)
+    {
+        disable = "disabled";
+    }
+}
+
+<div id="categories" style="float:left">
+    @using (Html.BeginForm())
+    {
+        @Html.DropDownListFor(x => x.Categories, new SelectList(Model.Categories),
+        "Изберете нова категория думи..",
+       new { onchange = "document.location.href = '/Game/StartGame?selValue=' + this.options[this.selectedIndex].value;" });
+    }
+    <p>Избрана категория: @Model.SelectedCategory</p>
+</div>
+
+<div class="word" style="float:right">
+    <p><font size="6">@String.Join(String.Empty, Model.WordInProgress)</font></p>
+    <br />
+    <p><font size="3">@Model.Clue</font></p>
+
+    <div id="image" class="col-md-5" style="float:left">
+        <img src="@Model.ImageUrl" alt="No Image" />
+    </div>
+
+    <div class="char_buttons">
+        <input id="btn1" type="button" value="А" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="а"})'" @disable/>
+        <input id="btn2" type="button" value="Б" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="б"})'" @disable/>
+        <input id="btn3" type="button" value="В" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="в"})'" @disable/>
+        <input id="btn4" type="button" value="Г" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="г"})'" @disable/>
+        <input id="btn5" type="button" value="Д" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="д"})'" @disable/>
+        <input id="btn6" type="button" value="Е" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="е"})'" @disable/>
+        <input id="btn7" type="button" value="Ж" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ж"})'" @disable/>
+        <input id="btn8" type="button" value="З" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="з"})'" @disable/>
+        <input id="btn9" type="button" value="И" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="и"})'" @disable/>
+        <input id="btn10" type="button" value="Й" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="й"})'" @disable/>
+        <input id="btn11" type="button" value="К" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="к"})'" @disable/>
+        <input id="btn12" type="button" value="Л" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="л"})'" @disable/>
+        <input id="btn13" type="button" value="М" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="м"})'" @disable/>
+        <input id="btn14" type="button" value="Н" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="н"})'" @disable/>
+        <input id="btn15" type="button" value="О" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="о"})'" @disable/>
+        <input id="btn16" type="button" value="П" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="п"})'" @disable/>
+        <input id="btn17" type="button" value="Р" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="р"})'" @disable/>
+        <input id="btn18" type="button" value="С" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="с"})'" @disable/>
+        <input id="btn19" type="button" value="Т" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="т"})'" @disable/>
+        <input id="btn20" type="button" value="У" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="у"})'" @disable/>
+        <input id="btn21" type="button" value="Ф" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ф"})'" @disable/>
+        <input id="btn22" type="button" value="Х" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="х"})'" @disable/>
+        <input id="btn23" type="button" value="Ц" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ц"})'" @disable/>
+        <input id="btn24" type="button" value="Ч" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ч"})'" @disable/>
+        <input id="btn25" type="button" value="Ш" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ш"})'" @disable/>
+        <input id="btn26" type="button" value="Щ" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="щ"})'" @disable/>
+        <input id="btn27" type="button" value="Ъ" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ъ"})'" @disable/>
+        <input id="btn28" type="button" value="ь" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ь"})'" @disable/>
+        <input id="btn29" type="button" value="Ю" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="ю"})'" @disable/>
+        <input id="btn30" type="button" value="Я" onclick="window.location.href=
+            '@Url.Action("ProcessWord", "Game", new { guess="я"})'" @disable/>
+    </div>
+
+    <br />
+
+    <div class="fullWordGuess">
+        @using (Html.BeginForm("FullWordGuess", "Game", FormMethod.Post))
+        {
+            @Html.Label("Знаете думата? Въведете я тук:")
+            @Html.TextBox("word")
+            <input type="submit" id="btnSubmit" name="Познах!" @disable/>
+        }
+    </div>
+
+    <br />
+
+    <div class="results">
+        <p><font size="3">Познати букви - @Model.GuessedChars</font></p>
+        
+        <p><font size="3">Сгрешени букви - @Model.MistakenChars</font></p>
+    </div>
+</div>
+
