@@ -2,14 +2,21 @@
 using System.Linq;
 
 using HangmanMVC.Web.ViewModels;
+using HangmanMVC.Data.Common;
 
 namespace HangmanMVC.Web.GameBase
 {
+    /// <summary>
+    /// Coordinator class, which handles all the logic during the game
+    /// </summary>
     public class GameCoordinator
     {
         private static GameViewModel viewModel = new GameViewModel();
         private static ResultsViewModel resultsViewModel = new ResultsViewModel();
 
+        /// <summary>
+        /// Gets/sets the view model
+        /// </summary>
         public GameViewModel ViewModel
         {
             get
@@ -22,6 +29,9 @@ namespace HangmanMVC.Web.GameBase
             }
         }
 
+        /// <summary>
+        /// Gets/sets the results view model
+        /// </summary>
         public ResultsViewModel ResultsViewModel
         {
             get
@@ -34,7 +44,15 @@ namespace HangmanMVC.Web.GameBase
             }
         }
 
-        public void StartGame(string userId, string fullWord, List<string> wordInProgress, string clue, 
+        /// <summary>
+        /// Starts the game and initializes needed data.
+        /// </summary>
+        /// <param name="userId">Id of the current user</param>
+        /// <param name="fullWord">The full word to guess</param>
+        /// <param name="clue">Description of the word</param>
+        /// <param name="categories">Word categories</param>
+        /// <param name="selectedCategory">Currently selected word category</param>
+        public void StartGame(string userId, string fullWord, string clue, 
             List<string> categories, string selectedCategory)
         {
             // Initialize view model
@@ -42,12 +60,12 @@ namespace HangmanMVC.Web.GameBase
             {
                 Id = userId,
                 FullWord = fullWord,
-                WordInProgress = wordInProgress,
+                WordInProgress = new List<string>(),
                 Clue = clue,
                 GuessedChars = 0,
                 MistakenChars = 0,
                 GameStatus = GameStatus.InProgress,
-                ImageUrl = "/Content/Images/0.png",
+                ImageUrl = UtilityConstants.InitialImageUrl,
                 Categories = categories,
                 SelectedCategory = selectedCategory
         };
@@ -55,6 +73,10 @@ namespace HangmanMVC.Web.GameBase
             ProcessInitialWord();
         }
 
+        /// <summary>
+        /// Processes a letter guess
+        /// </summary>
+        /// <param name="guess">Letter from user input</param>
         public void ProcessGuess(string guess)
         {
             if (viewModel.GameStatus != GameStatus.Win && viewModel.GameStatus != GameStatus.Lose)
@@ -79,13 +101,18 @@ namespace HangmanMVC.Web.GameBase
                 else
                 {
                     viewModel.MistakenChars += 1;
-                    viewModel.GameStatus = (viewModel.MistakenChars == 6) ? GameStatus.Lose : GameStatus.InProgress;
+                    viewModel.GameStatus = (viewModel.MistakenChars == UtilityConstants.AllowedMistakes)
+                        ? GameStatus.Lose : GameStatus.InProgress;
                 }
 
                 viewModel.ImageUrl = "/Content/Images/" + viewModel.MistakenChars + ".png";
             }
         }
 
+        /// <summary>
+        /// Processes full word guess
+        /// </summary>
+        /// <param name="guess">Full word from user input</param>
         public void ProcessFullGuess(string guess)
         {
             if (viewModel.GameStatus != GameStatus.Win && viewModel.GameStatus != GameStatus.Lose)
@@ -101,6 +128,10 @@ namespace HangmanMVC.Web.GameBase
             }
         }
 
+        /// <summary>
+        /// Processes the initial state of the word. Adds only first and last letters and fills
+        /// the rest with empty spaces.
+        /// </summary>
         private void ProcessInitialWord()
         {            
             viewModel.WordInProgress.Add(viewModel.FullWord[0].ToString());

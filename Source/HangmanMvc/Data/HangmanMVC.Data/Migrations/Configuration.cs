@@ -3,8 +3,6 @@ namespace HangmanMVC.Data.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -63,15 +61,19 @@ namespace HangmanMVC.Data.Migrations
             var animalsCategory = new WordCategory { Name = "Животни" };
             animalsCategory.Words.Add(new Word { Value = "Сурикат", Clue = "Малко. Стои изправено и живее в дупки в пустинята." });
             animalsCategory.Words.Add(new Word { Value = "Мечка", Clue = "Дебело и тромаво. Спи зимен сън и обича мед." });
-            animalsCategory.Words.Add(new Word { Value = "Миеща мечка", Clue = "Другото име на Енот." });
-            animalsCategory.Words.Add(new Word { Value = "Пилето пи пи", Clue = "Пиле с много думи." });
+            animalsCategory.Words.Add(new Word { Value = "Миеща мечка", Clue = "Другото име на Енот." });            
             context.WordCategories.Add(animalsCategory);
 
             var carsCategory = new WordCategory { Name = "Атомобили" };
             carsCategory.Words.Add(new Word { Value = "Тойота", Clue = "Един от моделите на марката е най - продаваният в света." });
-            carsCategory.Words.Add(new Word { Value = "Фоксваген", Clue = "Народният автомобил на Германия." });
+            carsCategory.Words.Add(new Word { Value = "Фолксваген", Clue = "Народният автомобил на Германия." });
             carsCategory.Words.Add(new Word { Value = "Алфа Ромео", Clue = "Емблематичен италиански автомобил." });
             context.WordCategories.Add(carsCategory);
+
+            var moviesCategory = new WordCategory { Name = "Филми" };
+            moviesCategory.Words.Add(new Word { Value = "Мъже в черно", Clue = "Известен филм с Уил Смит" });
+            moviesCategory.Words.Add(new Word { Value = "Оркестър без име", Clue = "Известен български филм с Георги Мамалев" });
+            context.WordCategories.Add(moviesCategory);
 
             context.SaveChanges();
         }

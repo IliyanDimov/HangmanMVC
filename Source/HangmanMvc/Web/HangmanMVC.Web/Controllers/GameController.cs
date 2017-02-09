@@ -1,23 +1,30 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System;
 
 using HangmanMVC.Data.Models;
 using HangmanMVC.Web.ViewModels;
-using HangmanMVC.Data;
 using HangmanMVC.Web.GameBase;
 using HangmanMVC.Data.Common;
 
 namespace HangmanMVC.Web.Controllers
 {
+    /// <summary>
+    /// This is the main controller for the game. It is responsible for all needed game functions.
+    /// </summary>
     public class GameController : Controller
     {
         private IDbGenericRepository<ApplicationUser, string> users;
         private IDbRepository<Word> words;
         private IDbRepository<WordCategory> categories;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userRepo">Repo to help interact with the users db records</param>
+        /// <param name="wordsRepo">Repo to help intercat with the words db records</param>
+        /// <param name="categoriesRepo">Repo to help interact with the categories db records</param>
         public GameController(IDbGenericRepository<ApplicationUser, string> userRepo, IDbRepository<Word> wordsRepo,
             IDbRepository<WordCategory> categoriesRepo)
         {
@@ -26,6 +33,11 @@ namespace HangmanMVC.Web.Controllers
             categories = categoriesRepo;
         }
 
+        /// <summary>
+        /// This method is reponsible for starting the game
+        /// </summary>
+        /// <param name="selValue">Value, indicating the selected word category in the dropdown list on the main screen</param>
+        /// <returns></returns>
         public ActionResult StartGame(string selValue)
         {      
             GameCoordinator gameCoordinator = new GameCoordinator();
@@ -46,11 +58,15 @@ namespace HangmanMVC.Web.Controllers
             }
 
             gameCoordinator.StartGame(this.User.Identity.GetUserId(), wordQuery.Value,
-                new List<string>(), wordQuery.Clue, categories.All().Select(x => x.Name).ToList(), selValue);
+                wordQuery.Clue, categories.All().Select(x => x.Name).ToList(), selValue);
 
             return View("../Game/Game", gameCoordinator.ViewModel);
         }
 
+        /// <summary>
+        /// Gathers the game results for the current user and sends them to the view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ShowResults()
         {
             GameCoordinator gameCoordinator = new GameCoordinator();
@@ -66,7 +82,12 @@ namespace HangmanMVC.Web.Controllers
             return View("../Game/Results", gameCoordinator.ResultsViewModel);
         }
         
-        public ActionResult ProcessWord(string guess)
+        /// <summary>
+        /// Processes a letter guess
+        /// </summary>
+        /// <param name="guess">A single letter, which has been chosen by the user</param>
+        /// <returns></returns>
+        public ActionResult WordGuess(string guess)
         {
             GameCoordinator gameCoordinator = new GameCoordinator();
             GameViewModel model = gameCoordinator.ViewModel;           
@@ -81,6 +102,11 @@ namespace HangmanMVC.Web.Controllers
             return View("Game", model);
         }
 
+        /// <summary>
+        /// Processes a full word guess
+        /// </summary>
+        /// <param name="word">The full word, provided by the user</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult FullWordGuess(string word)
         {
@@ -97,6 +123,10 @@ namespace HangmanMVC.Web.Controllers
             return View("Game", model);
         }
 
+        /// <summary>
+        /// Finishes the current game by updating the game results, depending on the win/lost state of the game
+        /// </summary>
+        /// <param name="coordinator"></param>
         private void FinishGame(GameCoordinator coordinator)
         {
             GameViewModel model = coordinator.ViewModel;
@@ -105,7 +135,7 @@ namespace HangmanMVC.Web.Controllers
 
             if (model.GameStatus == GameStatus.Win)
             {
-                model.ImageUrl = "/Content/Images/success.png";
+                model.ImageUrl = UtilityConstants.WinImageUrl;
 
                 model.WordInProgress.Clear();
                 model.WordInProgress.Add(model.FullWord);
@@ -119,7 +149,7 @@ namespace HangmanMVC.Web.Controllers
             }
             else if (model.GameStatus == GameStatus.Lose)
             {
-                model.ImageUrl = "/Content/Images/game_over.png";
+                model.ImageUrl = UtilityConstants.LoseImageUrl;
 
                 // Update statistics
                 user.GamesLost += 1;

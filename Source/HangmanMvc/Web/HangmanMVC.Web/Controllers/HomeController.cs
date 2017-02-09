@@ -1,27 +1,9 @@
-﻿using HangmanMVC.Data;
-using HangmanMVC.Data.Common;
-using HangmanMVC.Data.Models;
-using System.Web.Mvc;
-using System.Linq;
+﻿using System.Web.Mvc;
 
 namespace HangmanMVC.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private IDbRepository<Word> words;
-        private IDbRepository<WordCategory> wordCategories;
-
-        private string fullWordToGuess = string.Empty;
-        private string clue = string.Empty;
-
-        private string wordInProgress = string.Empty;
-
-        public HomeController(IDbRepository<Word> words, IDbRepository<WordCategory> wordCategories)
-        {
-            this.words = words;
-            this.wordCategories = wordCategories;            
-        }
-
         public ActionResult Index()
         {
             return View();
