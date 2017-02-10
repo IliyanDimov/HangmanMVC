@@ -8,6 +8,22 @@
     }
 }
 
+<style>
+    div.word
+        {
+        position: fixed;
+        top: 100px;
+        right: 100px;
+        width: 500px;
+        height: 100px;
+        }
+
+    div.char_buttons{
+        position: absolute;
+
+    }
+</style>
+
 <div id="categories" style="float:left">
     <br />
     <br />
@@ -21,16 +37,13 @@
     <p>Избрана категория: @Model.SelectedCategory</p>
 </div>
 
-<div class="word" style="float:right">
+<div class="word">
     <p><font size="6">@String.Join(String.Empty, Model.WordInProgress)</font></p>
     <br />
-    <p><font size="3">@Model.Clue</font></p>
-
-    <div id="image" class="col-md-5" style="float:left">
-        <img src="@Model.ImageUrl" alt="No Image" />
-    </div>
-
-    <div class="char_buttons">
+    <p><font size="3">@Model.Clue</font></p>  
+    
+    
+        <div class="char_buttons">
         
         <input id="btn1" type="button" value="А" onclick="window.location.href=
             '@Url.Action("WordGuess", "Game", new { guess="а"})'" @disable/>
@@ -63,6 +76,9 @@
         <input id="btn15" type="button" value="О" onclick="window.location.href=
             '@Url.Action("WordGuess", "Game", new { guess="о"})'" @disable/>
 
+        <br />
+        <br />
+
         <input id="btn16" type="button" value="П" onclick="window.location.href=
             '@Url.Action("WordGuess", "Game", new { guess="п"})'" @disable/>
         <input id="btn17" type="button" value="Р" onclick="window.location.href=
@@ -93,12 +109,9 @@
             '@Url.Action("WordGuess", "Game", new { guess="ю"})'" @disable/>
         <input id="btn30" type="button" value="Я" onclick="window.location.href=
             '@Url.Action("WordGuess", "Game", new { guess="я"})'" @disable/>
-        </div>
-    
-
-    <br />
 
     <div class="fullWordGuess">
+        <br />
         @using (Html.BeginForm("FullWordGuess", "Game", FormMethod.Post))
         {
             @Html.Label("Знаете думата? Въведете я тук:")
@@ -107,12 +120,19 @@
         }
     </div>
 
-    <br />
-
-    <div class="results">
+        <div class="results">
         <p><font size="3">Познати букви - @Model.GuessedChars</font></p>
         
         <p><font size="3">Сгрешени букви - @Model.MistakenChars</font></p>
     </div>
-</div>
+        </div> 
+      
+    </div>
+
+<div id="image" class="col-md-5" style="float:left">
+        <img src="@Model.ImageUrl" alt="No Image" />
+    </div>
+
+  
+
 
