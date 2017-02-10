@@ -13,14 +13,21 @@
         {
         position: fixed;
         top: 100px;
-        right: 100px;
-        width: 500px;
+        right: 90px;
         height: 100px;
         }
 
     div.char_buttons{
-        position: absolute;
+        position: relative;
 
+    }
+
+    div.image{
+        position: fixed;
+        left: 350px;
+        width: 360px;
+        top: 100px;
+        z-index: -1;
     }
 </style>
 
@@ -124,14 +131,21 @@
         <p><font size="3">Познати букви - @Model.GuessedChars</font></p>
         
         <p><font size="3">Сгрешени букви - @Model.MistakenChars</font></p>
-    </div>
-        </div> 
-      
+    </div>           
+
+        </div>      
+    
+    
+     
     </div>
 
-<div id="image" class="col-md-5" style="float:left">
+<div class="image">
         <img src="@Model.ImageUrl" alt="No Image" />
     </div>
+
+    
+
+
 
   
 
